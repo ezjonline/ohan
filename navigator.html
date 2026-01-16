@@ -67,50 +67,8 @@
             </style>
 
             <script>
+                // Robust initialization with polling to handle race conditions
                 window.botpress.on("webchat:ready", () => {
-                    const target = document.querySelector("#webchat");
-                    const bpContainer = document.querySelector(".bpChatContainer");
-
-                    if (target && bpContainer) {
-                        // Move container and force it to fill the target
-                        target.appendChild(bpContainer);
-                        target.style.position = "relative";
-                        bpContainer.style.position = "absolute";
-                        bpContainer.style.top = "0";
-                        bpContainer.style.left = "0";
-                        bpContainer.style.width = "100%";
-                        bpContainer.style.height = "100%";
-                        bpContainer.style.zIndex = "10";
-                    }
-
-                    // Helper to inject styles into shadow roots
-                    const injectShadowStyles = (root) => {
-                        const style = document.createElement('style');
-                        style.textContent = `
-                            .bpWebchat { 
-                                position: absolute !important; 
-                                top: 0 !important; 
-                                left: 0 !important; 
-                                width: 100% !important; 
-                                height: 100% !important; 
-                                max-height: none !important; 
-                                border-radius: 0 !important;
-                                margin: 0 !important;
-                                transform: none !important;
-                            }
-                            .bpFab { display: none !important; }
-                        `;
-                        root.appendChild(style);
-                    };
-
-                    // Find and style shadow roots
-                    const allElements = document.querySelectorAll('*');
-                    for (const el of allElements) {
-                        if (el.shadowRoot) {
-                            injectShadowStyles(el.shadowRoot);
-                        }
-                    }
-
                     window.botpress.open();
                 });
 

@@ -67,31 +67,101 @@
             </style>
 
             <script>
-                // Robust initialization with polling to handle race conditions
-                window.botpress.on("webchat:ready", () => {
-                    window.botpress.open();
-                });
+                // Defensive loading: Wait for window.botpress to be defined
+                const initBotpress = () => {
+                    if (window.botpress) {
+                        // 1. Initialize Botpress
+                        window.botpress.on("webchat:ready", () => {
+                            window.botpress.open();
+                        });
 
-                window.botpress.init({
-                    botId: "f7782624-6f78-4ff4-b907-d9ebbe87ebd9",
-                    clientId: "bd9a65eb-d3cd-488a-bb70-20e710daaac2",
-                    selector: "#webchat",
-                    configuration: {
-                        version: "v2",
-                        botName: "Oral Health Access Navigator",
-                        botAvatar: "https://files.bpcontent.cloud/2026/01/12/03/20260112034006-3PR33DP7.png",
-                        color: "#258ea6",
-                        variant: "solid",
-                        headerVariant: "glass",
-                        themeMode: "light",
-                        fontFamily: "inter",
-                        radius: 4,
-                        feedbackEnabled: false,
-                        soundEnabled: false,
-                        proactiveMessageEnabled: false,
-                        footer: "[⚡ by Botpress](https://botpress.com/?from=webchat)"
+                        window.botpress.init({
+                            botId: "f7782624-6f78-4ff4-b907-d9ebbe87ebd9",
+                            clientId: "bd9a65eb-d3cd-488a-bb70-20e710daaac2",
+                            selector: "#webchat",
+                            configuration: {
+                                version: "v2",
+                                botName: "Oral Health Access Navigator",
+                                botAvatar: "https://files.bpcontent.cloud/2026/01/12/03/20260112034006-3PR33DP7.png",
+                                color: "#258ea6",
+                                variant: "solid",
+                                headerVariant: "glass",
+                                themeMode: "light",
+                                fontFamily: "inter",
+                                radius: 4,
+                                feedbackEnabled: false,
+                                soundEnabled: false,
+                                proactiveMessageEnabled: false,
+                                footer: "[⚡ by Botpress](https://botpress.com/?from=webchat)"
+                            }
+                        });
+
+                        // 2. Start Polling for Inline Layout (Shadow DOM Fix)
+                        const forceInlineInterval = setInterval(() => {
+                            const target = document.querySelector("#webchat");
+                            const bpContainer = document.querySelector(".bpChatContainer");
+
+                            if (target && bpContainer) {
+                                // Move container if not already moved
+                                if (bpContainer.parentElement !== target) {
+                                    target.appendChild(bpContainer);
+                                }
+
+                                // Force inline styles on container
+                                target.style.position = "relative";
+                                bpContainer.style.position = "absolute";
+                                bpContainer.style.top = "0";
+                                bpContainer.style.left = "0";
+                                bpContainer.style.width = "100%";
+                                bpContainer.style.height = "100%";
+                                bpContainer.style.zIndex = "10";
+
+                                // Inject styles into ALL Shadow Roots found
+                                const allElements = document.querySelectorAll('*');
+                                for (const el of allElements) {
+                                    if (el.shadowRoot) {
+                                        const sheet = new CSSStyleSheet();
+                                        sheet.replaceSync(`
+                                            .bpWebchat { 
+                                                position: absolute !important; 
+                                                top: 0 !important; 
+                                                left: 0 !important; 
+                                                width: 100% !important; 
+                                                height: 100% !important; 
+                                                max-height: none !important; 
+                                                border-radius: 0 !important; 
+                                                margin: 0 !important;
+                                                transform: none !important;
+                                            }
+                                            .bpFab { display: none !important; }
+                                        `);
+                                        try {
+                                            el.shadowRoot.adoptedStyleSheets = [...el.shadowRoot.adoptedStyleSheets, sheet];
+                                        } catch (e) {
+                                            // Fallback
+                                            const style = document.createElement('style');
+                                            style.textContent = `
+                                                .bpWebchat { position: absolute !important; width: 100% !important; height: 100% !important; }
+                                                .bpFab { display: none !important; }
+                                            `;
+                                            el.shadowRoot.appendChild(style);
+                                        }
+                                    }
+                                }
+                            }
+                        }, 100);
+
+                        // Stop polling after 15 seconds
+                        setTimeout(() => clearInterval(forceInlineInterval), 15000);
+
+                    } else {
+                        // Retry until defined
+                        setTimeout(initBotpress, 50);
                     }
-                });
+                };
+
+                // Kick off initialization
+                initBotpress();
             </script>
 
             <!-- Disclaimer -->

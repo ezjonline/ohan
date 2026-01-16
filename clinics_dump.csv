@@ -1,0 +1,9 @@
+Clinic Name,Specialty,Services Offered,Zip Code,City,State,Insurance Accepted,Cost Level,Languages,Website,Phone
+Community Smile Center,General Dentistry,"Cleanings, exams, fillings, basic dental care",78704,Austin,TX,"Medicaid, Uninsured",Low-cost,"English, Spanish",https://example.com,555-123-0001
+Bright Kids Dental,Pediatric Dentistry,"Children exams, fluoride treatments, sealants",78702,Austin,TX,Medicaid,Low-cost,"English, Spanish",https://example.com,555-123-0002
+Hope Oral Surgery,Oral Surgery,"Extractions, emergency dental care, wisdom teeth",78701,Austin,TX,"Uninsured, Self-pay",Sliding scale,English,https://example.com,555-123-0003
+Healthy Gums Clinic,Periodontics,"Gum disease treatment, deep cleanings",78745,Austin,TX,"Medicaid, Uninsured",Low-cost,"English, Spanish",https://example.com,555-123-0004
+Access Dental Care,General Dentistry,"Exams, cleanings, pain evaluations",78753,Austin,TX,Uninsured,Sliding scale,"English, Spanish",https://example.com,555-123-0005
+Southside Dental Outreach,General Dentistry,"Preventive care, fillings, oral health education",78748,Austin,TX,"Medicaid, Uninsured",Low-cost,"English, Spanish",https://example.com,555-123-0006
+Austin Family Dental,Pediatric Dentistry,Family and children dental care,78723,Austin,TX,Medicaid,Low-cost,"English, Spanish",https://example.com,555-123-0007
+Emergency Smile Center,Emergency Dentistry,"Urgent dental pain, infections, trauma",78758,Austin,TX,Self-pay,Sliding scale,English,https://example.com,555-123-0008

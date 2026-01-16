@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oral Health Access Navigator (OHAN)</title>
+    <meta name="description" content="Find affordable dental care and trusted oral health information.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css?v=3">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar" style="background: transparent; border: none;">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="OHAN Health" class="logo-img">
+            </a>
+
+            <nav id="nav-menu" class="nav-menu flex items-center gap-4">
+                <!-- Language Selector -->
+                <div class="lang-selector flex items-center gap-1"
+                    style="background: rgba(255,255,255,0.5); padding: 4px 12px; border-radius: 20px; margin-right: var(--spacing-2); cursor: pointer; color: var(--color-text-muted); font-weight: 700; font-size: 0.9rem;">
+                    <i data-lucide="globe" style="width: 16px;"></i>
+                    <span>EN</span>
+                </div>
+
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="clinics.html" class="nav-link">Find Clinics</a>
+                <!-- Partner Link Added -->
+                <a href="partner.html" class="nav-link">Partners</a>
+                <a href="navigator.html" class="btn btn-primary" style="margin-left: var(--spacing-2);">Start
+                    Navigator</a>
+            </nav>
+            <button id="menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"
+                style="display: none;">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Expanded Hero Section -->
+        <section class="hero-section"
+            style="min-height: 85vh; display: flex; align-items: center; padding: var(--spacing-8) 0; background: linear-gradient(135deg, #F0F7FA 0%, #E0F7FA 100%);">
+            <div class="container">
+                <div class="grid grid-cols-2 gap-8 items-center">
+                    <!-- Content -->
+                    <div>
+                        <h1 style="color: var(--color-primary); margin-bottom: var(--spacing-4);">
+                            Need help finding affordable dental care?
+                        </h1>
+                        <p
+                            style="font-size: 1.5rem; color: var(--color-text-muted); margin-bottom: var(--spacing-6); max-width: 90%;">
+                            OHAN guides you to nearby low-cost clinics so you can get the care you need.
+                        </p>
+
+                        <div class="flex gap-4 flex-wrap" style="margin-bottom: var(--spacing-4);">
+                            <a href="navigator.html" class="btn btn-primary"
+                                style="padding: 1.25rem 2.5rem; font-size: 1.25rem;">
+                                Get Help Now <i data-lucide="arrow-right" style="width: 20px;"></i>
+                            </a>
+                            <a href="clinics.html" class="btn btn-secondary"
+                                style="padding: 1.25rem 2.5rem; font-size: 1.25rem;">
+                                Find Nearby Clinics
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Illustration -->
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="hero-illustration.png" alt="People using OHAN to find dental care"
+                            style="width: 100%; max-width: 600px; height: auto; border-radius: var(--radius-lg);">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="section" style="background-color: white;">
+            <div class="container">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="card">
+                        <div
+                            style="background: var(--color-primary-light); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-3); color: var(--color-primary);">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <h3>Find Local Clinics</h3>
+                        <p>Locate safety-net dental clinics, federally qualified health centers, and dental schools near
+                            you.</p>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="background: var(--color-primary-light); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-3); color: var(--color-primary);">
+                            <i data-lucide="message-circle"></i>
+                        </div>
+                        <h3>Guided Support</h3>
+                        <p>Our interactive navigator asks simple questions to direct you to the right information and
+                            resources.</p>
+                    </div>
+
+                    <div class="card">
+                        <div
+                            style="background: var(--color-primary-light); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-3); color: var(--color-primary);">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h3>Trusted Info</h3>
+                        <p>All content is vetted by public health professionals to ensure accuracy and safety.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container flex flex-col items-center gap-6">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
+            </a>
+            <div class="flex gap-6 text-sm text-muted">
+                <a href="about.html" style="color: var(--color-text-muted);">About</a>
+                <a href="contact.html" style="color: var(--color-text-muted);">Contact</a>
+                <a href="#" style="color: var(--color-text-muted);">Privacy</a>
+            </div>
+            <div style="font-size: 0.875rem; color: var(--color-text-light);">
+                © 2025 OHAN Public Health Project.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <style>
+        /* Small override to show the menu button logic in pure CSS for mobile if needed, 
+           but we did JS toggle. Let's ensure the hidden state is correct in styles.css 
+           or inline here for robustness. */
+        @media (min-width: 769px) {
+            #menu-btn {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #menu-btn {
+                display: inline-flex !important;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-menu.is-active {
+                display: flex;
+            }
+        }
+    </style>
+    <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js" defer></script>
+    <script src="https://files.bpcontent.cloud/2026/01/07/05/20260107051650-RAIHAMXI.js" defer></script>
+</body>
+
+</html>

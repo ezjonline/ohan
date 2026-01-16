@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - OHAN</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+    <header class="navbar" style="background: transparent; border: none;">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="OHAN Health" class="logo-img">
+            </a>
+            <nav id="nav-menu" class="nav-menu flex items-center gap-4">
+                <div class="lang-selector flex items-center gap-1"
+                    style="background: rgba(255,255,255,0.5); padding: 4px 12px; border-radius: 20px; margin-right: var(--spacing-2); cursor: pointer; color: var(--color-text-muted); font-weight: 700; font-size: 0.9rem;">
+                    <i data-lucide="globe" style="width: 16px;"></i>
+                    <span>EN</span>
+                </div>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="clinics.html" class="nav-link">Find Clinics</a>
+                <a href="partner.html" class="nav-link">Partners</a>
+                <a href="navigator.html" class="btn btn-primary">Start Navigator</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container" style="max-width: 600px;">
+            <div class="text-center" style="margin-bottom: var(--spacing-6);">
+                <h1>Contact Us</h1>
+                <p class="text-muted">Have questions about the project? Send us a message.</p>
+            </div>
+
+            <div class="card">
+                <form action="#" method="POST" class="flex flex-col gap-4">
+                    <div>
+                        <label for="name" style="display: block; margin-bottom: 8px; font-weight: 500;">Name</label>
+                        <input type="text" id="name" name="name"
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+                    </div>
+
+                    <div>
+                        <label for="email" style="display: block; margin-bottom: 8px; font-weight: 500;">Email</label>
+                        <input type="email" id="email" name="email"
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+                    </div>
+
+                    <div>
+                        <label for="message"
+                            style="display: block; margin-bottom: 8px; font-weight: 500;">Message</label>
+                        <textarea id="message" name="message" rows="5"
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+
+                    <p
+                        style="font-size: 0.875rem; color: var(--color-text-muted); text-align: center; margin-top: var(--spacing-2);">
+                        For technical support only. Please do not share private medical information.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container flex flex-col items-center gap-6">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
+            </a>
+            <div style="font-size: 0.875rem; color: var(--color-text-light);">
+                © 2025 OHAN Public Health Project.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js" defer></script>
+    <script src="https://files.bpcontent.cloud/2026/01/07/05/20260107051650-RAIHAMXI.js" defer></script>
+</body>
+
+</html>

@@ -13,17 +13,12 @@
 </head>
 
 <body>
-    <header class="navbar" style="background: transparent; border: none;">
+    <header class="navbar">
         <div class="container flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" class="logo-img">
             </a>
             <nav id="nav-menu" class="nav-menu flex items-center gap-4">
-                <div class="lang-selector flex items-center gap-1"
-                    style="background: rgba(255,255,255,0.5); padding: 4px 12px; border-radius: 20px; margin-right: var(--spacing-2); cursor: pointer; color: var(--color-text-muted); font-weight: 700; font-size: 0.9rem;">
-                    <i data-lucide="globe" style="width: 16px;"></i>
-                    <span>EN</span>
-                </div>
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="clinics.html" class="nav-link">Find Clinics</a>
@@ -33,7 +28,7 @@
         </div>
     </header>
 
-    <main class="section">
+    <main class="section pt-safe">
         <div class="container" style="max-width: 600px;">
             <div class="text-center" style="margin-bottom: var(--spacing-6);">
                 <h1>Contact Us</h1>
@@ -77,8 +72,16 @@
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
+
+            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
+                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
+                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
+                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            </div>
+
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Public Health Project.
+                © 2025 OHAN Health.
             </div>
         </div>
     </footer>

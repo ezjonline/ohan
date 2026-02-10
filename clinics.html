@@ -13,17 +13,12 @@
 </head>
 
 <body>
-    <header class="navbar" style="background: transparent; border: none;">
+    <header class="navbar">
         <div class="container flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" class="logo-img">
             </a>
             <nav id="nav-menu" class="nav-menu flex items-center gap-4">
-                <div class="lang-selector flex items-center gap-1"
-                    style="background: rgba(255,255,255,0.5); padding: 4px 12px; border-radius: 20px; margin-right: var(--spacing-2); cursor: pointer; color: var(--color-text-muted); font-weight: 700; font-size: 0.9rem;">
-                    <i data-lucide="globe" style="width: 16px;"></i>
-                    <span>EN</span>
-                </div>
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="clinics.html" class="nav-link active">Find Clinics</a>
@@ -33,24 +28,53 @@
         </div>
     </header>
 
-    <main class="section">
+    <main class="section pt-safe">
         <div class="container">
             <div style="margin-bottom: var(--spacing-6);">
                 <h1>Clinic Directory</h1>
-                <p>Find low-cost, sliding-scale, and safety-net dental clinics near you.</p>
+                <p style="max-width: 100%;">Find low-cost, sliding-scale, and safety-net dental clinics near you. Clinic
+                    information is based on public sources and may change.</p>
             </div>
 
             <!-- Filters -->
             <div class="card" style="margin-bottom: var(--spacing-6); background: white; padding: var(--spacing-3);">
-                <div class="flex gap-4 items-center" style="flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 200px;">
+                <div class="flex gap-4 items-end" style="flex-wrap: wrap;">
+                    <!-- Specialty Filter (Primary) -->
+                    <div style="flex: 2; min-width: 240px;">
+                        <label for="specialty-filter"
+                            style="font-size: 0.875rem; font-weight: 600; display: block; margin-bottom: 4px;">Filter by
+                            Specialty</label>
+                        <select id="specialty-filter"
+                            style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background-color: white;">
+                            <option value="">All Specialties</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <!-- Zip Code (Secondary) -->
+                    <div style="flex: 1; min-width: 160px;">
                         <label for="zip-search"
                             style="font-size: 0.875rem; font-weight: 600; display: block; margin-bottom: 4px;">Zip
                             Code</label>
-                        <input type="text" id="zip-search" placeholder="Enter Zip Code (e.g. 78704)"
+                        <input type="text" id="zip-search" placeholder="Enter Zip"
                             style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
                     </div>
-                    <button id="search-btn" class="btn btn-primary" style="margin-top: 24px;">Search</button>
+
+                    <!-- Distance Selector -->
+                    <div style="flex: 1; min-width: 140px;">
+                        <label for="distance-filter"
+                            style="font-size: 0.875rem; font-weight: 600; display: block; margin-bottom: 4px;">Distance</label>
+                        <select id="distance-filter"
+                            style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background-color: white;">
+                            <option value="5">Within 5 Miles</option>
+                            <option value="10">Within 10 Miles</option>
+                            <option value="25" selected>Within 25 Miles</option>
+                            <option value="50">Within 50 Miles</option>
+                            <option value="100">Within 100 Miles</option>
+                        </select>
+                    </div>
+
+                    <button id="search-btn" class="btn btn-primary" style="height: 42px;">Search</button>
                     <!-- "View All" is implicit by clearing or we could add a button logic. -->
                 </div>
             </div>
@@ -78,6 +102,8 @@
                 <button id="clear-search-btn" class="btn btn-secondary" style="margin-top: 1rem;">View All
                     Clinics</button>
             </div>
+
+
         </div>
     </main>
 
@@ -86,8 +112,16 @@
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
+
+            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
+                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
+                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
+                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            </div>
+
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Public Health Project.
+                © 2025 OHAN Health.
             </div>
         </div>
     </footer>

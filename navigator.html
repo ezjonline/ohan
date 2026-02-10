@@ -15,17 +15,12 @@
 </head>
 
 <body>
-    <header class="navbar" style="background: transparent; border: none;">
+    <header class="navbar">
         <div class="container flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" class="logo-img">
             </a>
             <nav id="nav-menu" class="nav-menu flex items-center gap-4">
-                <div class="lang-selector flex items-center gap-1"
-                    style="background: rgba(255,255,255,0.5); padding: 4px 12px; border-radius: 20px; margin-right: var(--spacing-2); cursor: pointer; color: var(--color-text-muted); font-weight: 700; font-size: 0.9rem;">
-                    <i data-lucide="globe" style="width: 16px;"></i>
-                    <span>EN</span>
-                </div>
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="clinics.html" class="nav-link">Find Clinics</a>
@@ -37,13 +32,13 @@
 
 
 
-    <main class="section"
+    <main class="section pt-safe"
         style="min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: var(--spacing-12) 0;">
         <div class="container" style="max-width: 1000px; margin: 0 auto; text-align: center;">
             <h1 style="margin-bottom: var(--spacing-3); color: var(--color-primary);">Oral Health Access Navigator</h1>
             <p
                 style="font-size: 1.75rem; color: var(--color-text-muted); margin-bottom: var(--spacing-8); font-weight: 500;">
-                How can we help you today?
+                Answer a few simple questions to explore care options and find nearby clinics.
             </p>
 
             <!-- Botpress Embed Container -->
@@ -63,119 +58,55 @@
                 }
             </style>
 
+            <!-- Standard Botpress Scripts (Matches Index.html) -->
+            <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
+            <script src="https://files.bpcontent.cloud/2026/01/07/05/20260107051650-RAIHAMXI.js"></script>
+
+            <!-- Inline Embed Logic -->
             <script>
-                // Programmatic Loader for Botpress
-                // Ensures strict loading order and eliminates race conditions
-                (function () {
-                    console.log("Starting Botpress Loader...");
+                // Force Inline Mode for Navigator Page
+                window.addEventListener('load', () => {
+                    let attempts = 0;
+                    const interval = setInterval(() => {
+                        attempts++;
 
-                    const script = document.createElement('script');
-                    script.src = 'https://cdn.botpress.cloud/webchat/v3.5/inject.js';
-                    script.async = true;
-
-                    script.onload = () => {
-                        console.log("Botpress Script Loaded.");
-
-                        // Initialize immediately after load
+                        // 1. Check if Botpress is defined
                         if (window.botpress) {
-                            window.botpress.init({
-                                botId: "f7782624-6f78-4ff4-b907-d9ebbe87ebd9",
-                                clientId: "bd9a65eb-d3cd-488a-bb70-20e710daaac2",
-                                selector: "#webchat",
-                                configuration: {
-                                    version: "v2",
-                                    botName: "Oral Health Access Navigator",
-                                    botAvatar: "https://files.bpcontent.cloud/2026/01/12/03/20260112034006-3PR33DP7.png",
-                                    color: "#258ea6",
-                                    variant: "solid",
-                                    headerVariant: "glass",
-                                    themeMode: "light",
-                                    fontFamily: "inter",
-                                    radius: 4,
-                                    feedbackEnabled: false,
-                                    soundEnabled: false,
-                                    proactiveMessageEnabled: false,
-                                    footer: "[⚡ by Botpress](https://botpress.com/?from=webchat)"
-                                }
-                            });
 
-                            // Open on ready
-                            window.botpress.on("webchat:ready", () => {
-                                console.log("Botpress Ready. Opening...");
+                            // 2. Open the bot if it's not open
+                            try {
                                 window.botpress.open();
-                            });
+                            } catch (e) { console.log("Botpress open error (benign):", e); } // benign error if already opening
 
-                            // Polling for DOM Fixes (Inline Layout)
-                            // Starts immediately, doesn't wait for ready
-                            let attempts = 0;
-                            const forceInlineInterval = setInterval(() => {
-                                attempts++;
-                                const target = document.querySelector("#webchat");
-                                const bpContainer = document.querySelector(".bpChatContainer");
+                            // 3. Find elements
+                            const target = document.querySelector("#webchat");
+                            const bpContainer = document.querySelector(".bpChatContainer"); // variable class name, usually this
 
-                                if (target && bpContainer) {
-                                    // 1. Move container
-                                    if (bpContainer.parentElement !== target) {
-                                        target.appendChild(bpContainer);
-                                    }
-
-                                    // 2. Force Styles
-                                    target.style.position = "relative";
-                                    bpContainer.style.position = "absolute";
-                                    bpContainer.style.top = "0";
-                                    bpContainer.style.left = "0";
-                                    bpContainer.style.width = "100%";
-                                    bpContainer.style.height = "100%";
-                                    bpContainer.style.zIndex = "10";
-
-                                    // 3. Shadow DOM injection
-                                    const allElements = document.querySelectorAll('*');
-                                    for (const el of allElements) {
-                                        if (el.shadowRoot) {
-                                            const css = `
-                                                .bpWebchat { 
-                                                    position: absolute !important; top: 0 !important; left: 0 !important; 
-                                                    width: 100% !important; height: 100% !important; 
-                                                    max-height: none !important; margin: 0 !important; transform: none !important;
-                                                }
-                                                .bpFab { display: none !important; }
-                                            `;
-
-                                            // Modern method
-                                            try {
-                                                const sheet = new CSSStyleSheet();
-                                                sheet.replaceSync(css);
-                                                el.shadowRoot.adoptedStyleSheets = [...el.shadowRoot.adoptedStyleSheets, sheet];
-                                            } catch (e) {
-                                                // Fallback
-                                                const style = document.createElement('style');
-                                                style.textContent = css;
-                                                el.shadowRoot.appendChild(style);
-                                            }
-                                        }
-                                    }
+                            if (target && bpContainer) {
+                                // 4. Move container if needed
+                                if (bpContainer.parentElement !== target) {
+                                    target.appendChild(bpContainer);
+                                    console.log("Moved Botpress container to inline div.");
                                 }
 
-                                // Stop after 15s or if we verified it worked (optional, but safer to keep polling slightly longer)
-                                if (attempts > 150) { // 15 seconds
-                                    clearInterval(forceInlineInterval);
-                                }
-                            }, 100);
+                                // 5. Force Styles
+                                target.style.position = "relative";
+                                bpContainer.style.position = "absolute";
+                                bpContainer.style.top = "0";
+                                bpContainer.style.left = "0";
+                                bpContainer.style.width = "100%";
+                                bpContainer.style.height = "100%";
+                                bpContainer.style.zIndex = "10";
+                            }
                         }
-                    };
 
-                    script.onerror = () => {
-                        console.error("Failed to load Botpress script.");
-                    };
-
-                    document.head.appendChild(script);
-                })();
+                        // Stop after 10 seconds
+                        if (attempts > 100) clearInterval(interval);
+                    }, 100);
+                });
             </script>
 
-            <!-- Disclaimer -->
-            <div style="margin-top: var(--spacing-6); font-size: 1rem; color: var(--color-text-light);">
-                <p>OHAN is an educational tool and does not provide medical diagnosis or treatment.</p>
-            </div>
+
         </div>
     </main>
 
@@ -205,8 +136,16 @@
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
+
+            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
+                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
+                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
+                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            </div>
+
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Public Health Project.
+                © 2025 OHAN Health.
             </div>
         </div>
     </footer>

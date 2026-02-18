@@ -2,16 +2,64 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRZ6FLS4T0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-BRZ6FLS4T0');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Navigator - OHAN</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=4">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
+    <!-- Botpress Webchat Inline Embed -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+    <style>
+        .navigator-chat-wrap {
+            width: 100%;
+            max-width: 1100px;
+            margin: 32px auto 0 auto;
+            padding: 0 16px;
+        }
 
+        #webchat {
+            width: 100%;
+            height: 75vh;
+            min-height: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        #webchat .bpWebchat {
+            position: unset !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            max-width: 100% !important;
+        }
+
+        #webchat .bpFab {
+            display: none !important;
+        }
+
+        /* Hide any floating bubbles globally on this page */
+        .bpFab,
+        [class*="fab"],
+        [id*="fab"] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,106 +78,20 @@
         </div>
     </header>
 
-
-
-    <main class="section pt-safe"
-        style="min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: var(--spacing-12) 0;">
-        <div class="container" style="max-width: 1000px; margin: 0 auto; text-align: center;">
-            <h1 style="margin-bottom: var(--spacing-3); color: var(--color-primary);">Oral Health Access Navigator</h1>
+    <main class="section pt-safe" style="min-height: 80vh; padding: var(--spacing-8) 0;">
+        <div class="container" style="max-width: 1100px; margin: 0 auto; text-align: center;">
+            <h1 style="margin-bottom: var(--spacing-3); color: var(--color-primary); font-size: 2.5rem;">Oral Health
+                Access Navigator</h1>
             <p
-                style="font-size: 1.75rem; color: var(--color-text-muted); margin-bottom: var(--spacing-8); font-weight: 500;">
-                Answer a few simple questions to explore care options and find nearby clinics.
+                style="font-size: 1.25rem; color: var(--color-text-muted); margin-bottom: var(--spacing-8); max-width: 800px; margin-left: auto; margin-right: auto;">
+                Answer a few simple questions to explore your care options and find nearby dental clinics.
             </p>
 
-            <!-- Botpress Embed Container -->
-            <div id="webchat" style="width: 100%; height: 600px;"></div>
-
-            <style>
-                #webchat .bpWebchat {
-                    position: unset;
-                    width: 100%;
-                    height: 100%;
-                    max-height: 100%;
-                    max-width: 100%;
-                }
-
-                #webchat .bpFab {
-                    display: none;
-                }
-            </style>
-
-            <!-- Standard Botpress Scripts (Matches Index.html) -->
-            <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
-            <script src="https://files.bpcontent.cloud/2026/01/07/05/20260107051650-RAIHAMXI.js"></script>
-
-            <!-- Inline Embed Logic -->
-            <script>
-                // Force Inline Mode for Navigator Page
-                window.addEventListener('load', () => {
-                    let attempts = 0;
-                    const interval = setInterval(() => {
-                        attempts++;
-
-                        // 1. Check if Botpress is defined
-                        if (window.botpress) {
-
-                            // 2. Open the bot if it's not open
-                            try {
-                                window.botpress.open();
-                            } catch (e) { console.log("Botpress open error (benign):", e); } // benign error if already opening
-
-                            // 3. Find elements
-                            const target = document.querySelector("#webchat");
-                            const bpContainer = document.querySelector(".bpChatContainer"); // variable class name, usually this
-
-                            if (target && bpContainer) {
-                                // 4. Move container if needed
-                                if (bpContainer.parentElement !== target) {
-                                    target.appendChild(bpContainer);
-                                    console.log("Moved Botpress container to inline div.");
-                                }
-
-                                // 5. Force Styles
-                                target.style.position = "relative";
-                                bpContainer.style.position = "absolute";
-                                bpContainer.style.top = "0";
-                                bpContainer.style.left = "0";
-                                bpContainer.style.width = "100%";
-                                bpContainer.style.height = "100%";
-                                bpContainer.style.zIndex = "10";
-                            }
-                        }
-
-                        // Stop after 10 seconds
-                        if (attempts > 100) clearInterval(interval);
-                    }, 100);
-                });
-            </script>
-
-
+            <div class="navigator-chat-wrap">
+                <div id="webchat"></div>
+            </div>
         </div>
     </main>
-
-    <style>
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-    </style>
 
     <footer class="footer">
         <div class="container flex flex-col items-center gap-6">
@@ -150,10 +112,43 @@
         </div>
     </footer>
 
-
     <script src="script.js"></script>
 
+    <script>
+        // Initialize Botpress inline embed ONLY
+        window.botpress.on("webchat:ready", () => {
+            window.botpress.open();
+        });
 
+        window.botpress.init({
+            "botId": "f7782624-6f78-4ff4-b907-d9ebbe87ebd9",
+            "clientId": "bd9a65eb-d3cd-488a-bb70-20e710daaac2",
+            "selector": "#webchat",
+            "configuration": {
+                "version": "v2",
+                "botName": "Oral Health Access Navigator",
+                "botAvatar": "https://files.bpcontent.cloud/2026/01/12/03/20260112034006-3PR33DP7.png",
+                "website": {},
+                "email": {},
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
+                "color": "#258ea6",
+                "variant": "solid",
+                "headerVariant": "glass",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 4,
+                "feedbackEnabled": false,
+                "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)",
+                "soundEnabled": false,
+                "proactiveMessageEnabled": false,
+                "proactiveBubbleMessage": "Hi! 👋 Need help?",
+                "proactiveBubbleTriggerType": "afterDelay",
+                "proactiveBubbleDelayTime": 10
+            }
+        });
+    </script>
 </body>
 
 </html>

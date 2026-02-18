@@ -18,32 +18,23 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=4">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-
-    <!-- Botpress Inline Embed -->
-    <script src="https://cdn.botpress.cloud/desk/webchat/v3.4/inject.js"></script>
     <style>
-        #webchat .bpWebchat {
-            position: unset;
-            width: 100%;
-            height: 100%;
-            max-height: 100%;
-            max-width: 100%;
-        }
-
-        #webchat .bpFab {
-            display: none;
-        }
-
         .navigator-chat-wrap {
             width: 100%;
             max-width: 1100px;
             margin: 32px auto 0 auto;
             padding: 0 16px;
+        }
+
+        .chatbot-frame {
+            width: 100%;
+            height: 75vh;
+            min-height: 600px;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            background: #ffffff;
+            display: block;
         }
     </style>
 </head>
@@ -74,7 +65,9 @@
             </p>
 
             <div class="navigator-chat-wrap">
-                <div id="webchat" style="width: 100%; height: 100%; min-height: 600px;"></div>
+                <iframe class="chatbot-frame"
+                    src="https://cdn.botpress.cloud/webchat/v3.6/shareable.html?configUrl=https://files.bpcontent.cloud/2026/01/07/05/20260107051650-AZBVNNU4.json"
+                    title="Oral Health Access Navigator Chatbot" allow="microphone; camera" frameborder="0"></iframe>
             </div>
         </div>
     </main>
@@ -84,14 +77,12 @@
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
-
             <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
                 <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
                 <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
                 <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
                 <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
             </div>
-
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
                 © 2025 OHAN Health.
             </div>
@@ -99,40 +90,6 @@
     </footer>
 
     <script src="script.js"></script>
-
-    <script>
-        window.botpress.on("webchat:ready", () => {
-            window.botpress.open();
-        });
-        window.botpress.init({
-            "botId": "f7782624-6f78-4ff4-b907-d9ebbe87ebd9",
-            "configuration": {
-                "version": "v2",
-                "botName": "Oral Health Access Navigator",
-                "botAvatar": "https://files.bpcontent.cloud/2026/01/12/03/20260112034006-3PR33DP7.png",
-                "website": {},
-                "email": {},
-                "phone": {},
-                "termsOfService": {},
-                "privacyPolicy": {},
-                "color": "#258ea6",
-                "variant": "solid",
-                "headerVariant": "glass",
-                "themeMode": "light",
-                "fontFamily": "inter",
-                "radius": 4,
-                "feedbackEnabled": false,
-                "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)",
-                "soundEnabled": false,
-                "proactiveMessageEnabled": false,
-                "proactiveBubbleMessage": "Hi! 👋 Need help?",
-                "proactiveBubbleTriggerType": "afterDelay",
-                "proactiveBubbleDelayTime": 10
-            },
-            "clientId": "bd9a65eb-d3cd-488a-bb70-20e710daaac2",
-            "selector": "#webchat"
-        });
-    </script>
 </body>
 
 </html>

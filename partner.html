@@ -46,38 +46,39 @@
 
     <main>
         <!-- Specialized Hero for Partners -->
-        <section class="section" style="background-color: white; padding: 120px 0 80px;">
+        <section class="section" style="background-color: white; padding: 160px 0 80px;">
             <div class="container flex flex-col items-center text-center">
-                <div style="max-width: 900px; margin-bottom: var(--spacing-8);">
+                <div style="max-width: 1100px; margin-bottom: 48px;">
                     <span class="badge"
-                        style="background-color: var(--color-primary-light); color: var(--color-primary); margin-bottom: var(--spacing-3); font-size: 1rem; padding: 0.5rem 1rem;">For
+                        style="background-color: var(--color-primary-light); color: var(--color-primary); margin-bottom: 12px; font-size: 1rem; padding: 0.5rem 1rem;">For
                         Clinics & Dental Schools</span>
-                    <h1 style="margin-bottom: var(--spacing-4); line-height: 1.2;">Help improve access to dental care
-                    </h1>
+                    <h1 style="margin-bottom: 16px; line-height: 1.2; white-space: nowrap;">Help improve access to
+                        dental care</h1>
                     <p
-                        style="font-size: 1.5rem; color: var(--color-text-muted); margin: 0 auto var(--spacing-6); line-height: 1.6; max-width: 700px;">
+                        style="font-size: 1.5rem; color: var(--color-text-muted); margin: 0 auto; line-height: 1.6; max-width: 1100px;">
                         Partner with OHAN to reach underserved patients looking for affordable dental services.
                         Increase your visibility and support community health.
                     </p>
                 </div>
 
                 <!-- Benefits Row -->
-                <div class="benefits-row flex gap-12 justify-center flex-wrap" style="margin-bottom: 60px;">
+                <div class="benefits-row flex gap-12 justify-center flex-wrap"
+                    style="margin-bottom: 80px; margin-top: 40px;">
                     <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
-                        <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
+                        <div class="benefit-icon-wrapper">
                             <i data-lucide="users" style="color: var(--color-primary); width: 24px; height: 24px;"></i>
                         </div>
                         <span style="font-weight: 600;">Reach More Patients</span>
                     </div>
                     <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
-                        <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
+                        <div class="benefit-icon-wrapper">
                             <i data-lucide="check-circle"
                                 style="color: var(--color-primary); width: 24px; height: 24px;"></i>
                         </div>
                         <span style="font-weight: 600;">Reduce Referral Errors</span>
                     </div>
                     <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
-                        <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
+                        <div class="benefit-icon-wrapper">
                             <i data-lucide="heart" style="color: var(--color-primary); width: 24px; height: 24px;"></i>
                         </div>
                         <span style="font-weight: 600;">Support Community Health</span>
@@ -161,18 +162,37 @@
         }
 
         .section {
-            padding-top: 120px !important;
+            padding-top: 160px !important;
+        }
+
+        .benefit-icon-wrapper {
+            background: var(--color-primary-light);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            aspect-ratio: 1 / 1;
+        }
+
+        @media (max-width: 1100px) {
+            h1 {
+                white-space: normal !important;
+            }
         }
 
         @media (max-width: 768px) {
             .section {
-                padding-top: 100px !important;
+                padding-top: 120px !important;
             }
 
             .benefits-row {
                 flex-direction: column !important;
                 gap: 32px !important;
                 margin-bottom: 40px !important;
+                margin-top: 32px !important;
             }
 
             .form-wrapper {

@@ -155,12 +155,20 @@ async function fetchAllAirtableRecords() {
     const response = await fetch(PROXY_URL);
 
     if (!response.ok) {
-        const errorData = await response.json();
-        console.error('[Clinic] Proxy API Error:', errorData);
-        throw new Error(errorData.details?.errors?.[0]?.message || errorData.error || 'Server error');
+        const text = await response.text();
+        console.error('[Clinic] Proxy API Error Body:', text.substring(0, 200));
+        throw new Error(`Server error: ${response.status}`);
     }
 
-    const data = await response.json();
+    let data;
+    const text = await response.text();
+    try {
+        data = JSON.parse(text);
+    } catch (e) {
+        console.error('[Clinic] Failed to parse JSON. Body starts with:', text.substring(0, 200));
+        throw new Error('Invalid response format from server');
+    }
+
     console.log('[Clinic] Raw data received from proxy:', data);
 
     if (!data.records || !Array.isArray(data.records)) {

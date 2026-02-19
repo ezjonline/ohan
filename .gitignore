@@ -1,0 +1,7 @@
+.env
+node_modules/
+*.webp
+*.png
+brain/
+tempmediaStorage/
+clinics_dump.csv

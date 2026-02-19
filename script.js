@@ -29,12 +29,8 @@ if (typeof lucide !== 'undefined') {
     lucide.createIcons();
 }
 
-// 2. Airtable CMS Integration
-const AIRTABLE_API_KEY = 'YOUR_AIRTABLE_PAT_HERE'; // Replace with valid Personal Access Token
-const AIRTABLE_BASE_ID = 'appgBeqDTC54eBdAK';
-const AIRTABLE_TABLE_NAME = 'ALL%20CLINICS';
-const AIRTABLE_VIEW_NAME = 'Public%20Clinics';
-const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}?view=${AIRTABLE_VIEW_NAME}`;
+// 2. Airtable CMS Integration (Via Secure Proxy)
+const PROXY_URL = '/api/clinics';
 
 // State
 let allClinics = [];
@@ -83,23 +79,41 @@ const knownZips = {
 
 // Initialization
 async function initClinics() {
+    console.log('[Clinic] Starting initialization...');
+
     // DOM Elements (Re-query inside init to be safe)
     const clinicsContainer = document.getElementById('clinics-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    if (!clinicsContainer) return; // Not on clinics page
+    if (!clinicsContainer) {
+        console.warn('[Clinic] Container not found, skipping init.');
+        return;
+    }
 
     // Populate filters immediately (static list)
     populateSpecialties();
 
     try {
+        console.log('[Clinic] Attempting to fetch records via proxy...');
         allClinics = await fetchAllAirtableRecords();
+        console.log(`[Clinic] Successfully loaded ${allClinics.length} clinics`);
 
         if (loadingIndicator) loadingIndicator.style.display = 'none';
+
+        console.log('[Clinic] Starting DOM rendering...');
         renderClinics(allClinics);
+        console.log('[Clinic] Rendering complete.');
     } catch (error) {
-        console.error('Error loading clinics:', error);
-        if (loadingIndicator) loadingIndicator.innerHTML = '<p style="color: red;">Failed to load clinic data. Please refresh to try again.</p>';
+        console.error('[Clinic] Error loading clinics:', error);
+        if (loadingIndicator) {
+            loadingIndicator.innerHTML = `
+                <div style="color: #e53e3e; padding: 2rem; border: 1px solid #fed7d7; background: #fff5f5; border-radius: 8px;">
+                    <h3>Failed to load clinic data</h3>
+                    <p>${error.message}</p>
+                    <p style="font-size: 0.85rem; margin-top: 1rem;">Please check the server console for details.</p>
+                </div>
+            `;
+        }
     }
 }
 
@@ -136,39 +150,65 @@ function populateSpecialties() {
     });
 }
 
-// Fetch all from Airtable
+// Fetch all from Proxy
 async function fetchAllAirtableRecords() {
-    let records = [];
-    let offset = null;
+    const response = await fetch(PROXY_URL);
 
-    do {
-        const url = offset ? `${AIRTABLE_URL}&offset=${offset}` : AIRTABLE_URL;
-        const response = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` } });
-        if (!response.ok) throw new Error(`Airtable API Error: ${response.statusText}`);
-        const data = await response.json();
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error('[Clinic] Proxy API Error:', errorData);
+        throw new Error(errorData.details?.errors?.[0]?.message || errorData.error || 'Server error');
+    }
 
-        const mapped = data.records.map(record => {
-            const f = record.fields;
-            return {
-                'Clinic Name': f['Clinic Name'],
-                'City': f['City'],
-                'State': f['State'],
-                'Zip Code': f['Zip Code'] ? String(f['Zip Code']).trim() : '',
-                'Phone Number': f['Phone Number'],
-                'Website': f['Website'],
-                'Specialty': Array.isArray(f['Treatment Specialties']) ? f['Treatment Specialties'].join(', ') : f['Treatment Specialties'],
-                'Services Offered': Array.isArray(f['Services Offered']) ? f['Services Offered'].join(', ') : f['Services Offered'],
-                'Insurance Accepted': Array.isArray(f['Insurance Accepted']) ? f['Insurance Accepted'].join(', ') : f['Insurance Accepted'],
-                'Clinic Type': f['Clinic Type'],
-                'Classification Note': f['Services Offered Classification Note']
-            };
+    const data = await response.json();
+    console.log('[Clinic] Raw data received from proxy:', data);
+
+    if (!data.records || !Array.isArray(data.records)) {
+        console.error('[Clinic] Invalid data format:', data);
+        return [];
+    }
+
+    const mapped = data.records.map((record, index) => {
+        const f = record.fields;
+
+        // Log first record fields for audit as requested
+        if (index === 0) {
+            console.log('[Clinic] Smart Mapping Audit (First Record):', f);
+        }
+
+        // --- SMART FIELD MAPPING ---
+        // Handles variations in Airtable field names
+        const getField = (names) => {
+            const found = names.find(name => f[name] !== undefined);
+            return found ? f[found] : null;
+        };
+
+        const mappedRecord = {
+            'Clinic Name': getField(['Clinic Name', 'Name', 'Organization Name']),
+            'City': getField(['City', 'Location City']),
+            'State': getField(['State', 'Prov/State']),
+            'Zip Code': String(getField(['Zip Code', 'ZIP', 'Postal Code']) || '').trim(),
+            'Phone Number': getField(['Phone Number', 'Phone', 'Contact Number']),
+            'Website': getField(['Website', 'URL', 'Link']),
+            'Treatment Specialty': getField(['Treatment Specialties', 'Specialty', 'Department']),
+            'Services Offered': getField(['Services Offered', 'Services', 'Description']),
+            'Insurance Accepted': getField(['Insurance Accepted', 'Insurance', 'Payment Methods']),
+            'Clinic Type': getField(['Clinic Type', 'Type', 'Classification']),
+            'Classification Note': getField(['Services Offered Classification Note', 'Notes', 'Additional Info'])
+        };
+
+        // Flatten arrays to strings (common in Airtable multi-selects)
+        Object.keys(mappedRecord).forEach(key => {
+            if (Array.isArray(mappedRecord[key])) {
+                mappedRecord[key] = mappedRecord[key].join(', ');
+            }
         });
 
-        records = [...records, ...mapped];
-        offset = data.offset;
-    } while (offset);
+        return mappedRecord;
+    });
 
-    return records;
+    console.log('[Clinic] Mapping complete. First mapped record:', mapped[0]);
+    return mapped;
 }
 
 // Geo Helpers
@@ -221,7 +261,7 @@ function renderClinics(clinics) {
 
         // Data mapping
         const name = clinic['Clinic Name'] || 'Unknown Clinic';
-        const specialty = clinic['Specialty'] || 'General';
+        const specialty = clinic['Treatment Specialty'] || 'General';
         const zip = clinic['Zip Code'] || '';
         const city = clinic['City'] || 'Austin';
         const state = clinic['State'] || 'TX';
@@ -309,7 +349,7 @@ function handleSearch() {
         if (selectedSpecialty) {
             // Normalize clinic specialty string
             // Handle array or CSV string from Airtable
-            const rawSpec = clinic['Specialty'] || '';
+            const rawSpec = clinic['Treatment Specialty'] || '';
             const cSpecs = rawSpec.toLowerCase().split(',').map(s => s.trim());
             const targetSpec = selectedSpecialty.toLowerCase();
 

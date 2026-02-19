@@ -46,117 +46,71 @@
 
     <main>
         <!-- Specialized Hero for Partners -->
-        <section class="section" style="background-color: white; padding-bottom: var(--spacing-4);">
-            <div class="container">
-                <div class="grid grid-cols-2 gap-8 items-center">
-                    <div>
-                        <span class="badge"
-                            style="background-color: var(--color-primary-light); color: var(--color-primary); margin-bottom: var(--spacing-3); font-size: 1rem; padding: 0.5rem 1rem;">For
-                            Clinics & Dental Schools</span>
-                        <h1 style="margin-bottom: var(--spacing-4);">Help improve access to dental care</h1>
-                        <p
-                            style="font-size: 1.5rem; color: var(--color-text-muted); margin-bottom: var(--spacing-6); line-height: 1.6;">
-                            Partner with OHAN to reach underserved patients looking for affordable dental services.
-                            Increase your visibility and support community health.
-                        </p>
-                        <div class="flex gap-6" style="margin-bottom: var(--spacing-6); flex-wrap: wrap;">
-                            <div class="flex items-center gap-3" style="font-size: 1.125rem;">
-                                <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
-                                    <i data-lucide="users"
-                                        style="color: var(--color-primary); width: 24px; height: 24px;"></i>
-                                </div>
-                                <span style="font-weight: 600;">Reach More Patients</span>
-                            </div>
-                            <div class="flex items-center gap-3" style="font-size: 1.125rem;">
-                                <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
-                                    <i data-lucide="check-circle"
-                                        style="color: var(--color-primary); width: 24px; height: 24px;"></i>
-                                </div>
-                                <span style="font-weight: 600;">Reduce Referral Errors</span>
-                            </div>
-                            <div class="flex items-center gap-3" style="font-size: 1.125rem;">
-                                <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
-                                    <i data-lucide="heart"
-                                        style="color: var(--color-primary); width: 24px; height: 24px;"></i>
-                                </div>
-                                <span style="font-weight: 600;">Support Community Health</span>
-                            </div>
+        <section class="section" style="background-color: white; padding: 120px 0 80px;">
+            <div class="container flex flex-col items-center text-center">
+                <div style="max-width: 900px; margin-bottom: var(--spacing-8);">
+                    <span class="badge"
+                        style="background-color: var(--color-primary-light); color: var(--color-primary); margin-bottom: var(--spacing-3); font-size: 1rem; padding: 0.5rem 1rem;">For
+                        Clinics & Dental Schools</span>
+                    <h1 style="margin-bottom: var(--spacing-4); line-height: 1.2;">Help improve access to dental care
+                    </h1>
+                    <p
+                        style="font-size: 1.5rem; color: var(--color-text-muted); margin: 0 auto var(--spacing-6); line-height: 1.6; max-width: 700px;">
+                        Partner with OHAN to reach underserved patients looking for affordable dental services.
+                        Increase your visibility and support community health.
+                    </p>
+                </div>
+
+                <!-- Benefits Row -->
+                <div class="benefits-row flex gap-12 justify-center flex-wrap" style="margin-bottom: 60px;">
+                    <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
+                        <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
+                            <i data-lucide="users" style="color: var(--color-primary); width: 24px; height: 24px;"></i>
                         </div>
+                        <span style="font-weight: 600;">Reach More Patients</span>
                     </div>
-                    <div
-                        style="background: white; border-radius: var(--radius-lg); padding: var(--spacing-8); border: 1px solid var(--color-border); box-shadow: var(--shadow-lg);">
-                        <h2 style="margin-bottom: var(--spacing-6);">Connect with your community</h2>
-                        <form class="flex flex-col gap-4">
-                            <!-- Organization Details -->
-                            <div>
-                                <label class="label-heading">Clinic or Program Name</label>
-                                <input type="text" class="input" placeholder="e.g. Cedar Park Health">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="label-heading">Phone Number</label>
-                                    <input type="tel" class="input" placeholder="(555) ...">
-                                </div>
-                                <div>
-                                    <label class="label-heading">Website</label>
-                                    <input type="url" class="input" placeholder="https://...">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="label-heading">Location(s) / Address</label>
-                                <input type="text" class="input" placeholder="Full address">
-                            </div>
-
-                            <!-- Services (Checkboxes) -->
-                            <div>
-                                <label class="label-heading">Services Offered (Check all that apply)</label>
-                                <div class="grid grid-cols-2 gap-2" style="margin-top: 8px;">
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> General Dentistry
-                                    </label>
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Pediatric Dentistry
-                                    </label>
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Emergency Care
-                                    </label>
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Oral Surgery
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div style="height: 1px; background: var(--color-border); margin: 8px 0;"></div>
-
-                            <!-- Payment Options -->
-                            <div>
-                                <label class="label-heading">Payment & Eligibility</label>
-                                <div class="grid grid-cols-2 gap-2" style="margin-top: 8px;">
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Accepts Medicaid
-                                    </label>
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Sliding Scale
-                                    </label>
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Uninsured Welcome
-                                    </label>
-                                    <label class="flex items-center gap-2 checkbox-label">
-                                        <input type="checkbox"> Free Care
-                                    </label>
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn btn-primary"
-                                style="width: 100%; margin-top: var(--spacing-2);">
-                                Submit Application
-                            </button>
-                            <p style="font-size: 0.75rem; color: var(--color-text-muted); text-align: center;">Your
-                                information will be reviewed for accuracy before being listed.</p>
-                        </form>
+                    <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
+                        <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
+                            <i data-lucide="check-circle"
+                                style="color: var(--color-primary); width: 24px; height: 24px;"></i>
+                        </div>
+                        <span style="font-weight: 600;">Reduce Referral Errors</span>
                     </div>
+                    <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
+                        <div style="background: var(--color-primary-light); padding: 12px; border-radius: 50%;">
+                            <i data-lucide="heart" style="color: var(--color-primary); width: 24px; height: 24px;"></i>
+                        </div>
+                        <span style="font-weight: 600;">Support Community Health</span>
+                    </div>
+                </div>
+
+                <div class="form-wrapper"
+                    style="background: white; border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--color-border); box-shadow: var(--shadow-lg); width: 100%; max-width: 800px; text-align: left;">
+                    <iframe
+                        data-tally-src="https://tally.so/embed/jayLYR?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                        loading="lazy" width="100%" height="1668" frameborder="0" marginheight="0" marginwidth="0"
+                        title="Partner with OHAN">
+                    </iframe>
+
+                    <script>
+                        var d = document,
+                            w = "https://tally.so/widgets/embed.js",
+                            v = function () {
+                                "undefined" != typeof Tally
+                                    ? Tally.loadEmbeds()
+                                    : d.querySelectorAll("iframe[data-tally-src]:not([src])")
+                                        .forEach((function (e) { e.src = e.dataset.tallySrc }))
+                            };
+
+                        if ("undefined" != typeof Tally) v();
+                        else if (d.querySelector('script[src="' + w + '"]') == null) {
+                            var s = d.createElement("script");
+                            s.src = w,
+                                s.onload = v,
+                                s.onerror = v,
+                                d.body.appendChild(s);
+                        }
+                    </script>
                 </div>
             </div>
         </section>
@@ -206,10 +160,23 @@
             cursor: pointer;
         }
 
+        .section {
+            padding-top: 120px !important;
+        }
+
         @media (max-width: 768px) {
-            .grid-cols-2 {
-                grid-template-columns: 1fr !important;
-                /* Force stack on mobile */
+            .section {
+                padding-top: 100px !important;
+            }
+
+            .benefits-row {
+                flex-direction: column !important;
+                gap: 32px !important;
+                margin-bottom: 40px !important;
+            }
+
+            .form-wrapper {
+                padding: 24px !important;
             }
         }
     </style>

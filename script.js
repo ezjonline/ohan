@@ -462,31 +462,26 @@ function renderPagination() {
 
     const WINDOW_SIZE = 5;
 
-    // Calculate the window of pages to display
-    let windowStart = Math.max(1, currentPage - Math.floor(WINDOW_SIZE / 2));
-    let windowEnd = windowStart + WINDOW_SIZE - 1;
+    // Snap the window so it always starts on a multiple-of-5 boundary (1,6,11,…)
+    const windowStart = Math.floor((currentPage - 1) / WINDOW_SIZE) * WINDOW_SIZE + 1;
+    const windowEnd = Math.min(windowStart + WINDOW_SIZE - 1, totalPages);
 
-    // Clamp the window to valid page range
-    if (windowEnd > totalPages) {
-        windowEnd = totalPages;
-        windowStart = Math.max(1, windowEnd - WINDOW_SIZE + 1);
-    }
-
-    // Prev Button — goes back one page and keeps window in view
+    // Prev arrow — jumps back one full window (to first page of previous window)
+    const prevWindowStart = windowStart - WINDOW_SIZE;
     const prevBtn = document.createElement('button');
-    prevBtn.className = `btn btn-secondary ${currentPage === 1 ? 'disabled' : ''}`;
+    prevBtn.className = `btn btn-secondary ${windowStart === 1 ? 'disabled' : ''}`;
     prevBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
-    prevBtn.disabled = currentPage === 1;
+    prevBtn.disabled = windowStart === 1;
     prevBtn.onclick = () => {
-        if (currentPage > 1) {
-            currentPage--;
+        if (prevWindowStart >= 1) {
+            currentPage = prevWindowStart;
             renderClinics();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
     container.appendChild(prevBtn);
 
-    // Page Number Buttons (windowed)
+    // Page Number Buttons (current window only)
     for (let i = windowStart; i <= windowEnd; i++) {
         const pgBtn = document.createElement('button');
         pgBtn.className = `btn ${i === currentPage ? 'btn-primary' : 'btn-secondary'}`;
@@ -500,14 +495,15 @@ function renderPagination() {
         container.appendChild(pgBtn);
     }
 
-    // Next Button — goes forward one page and keeps window in view
+    // Next arrow — jumps forward one full window (to first page of next window)
+    const nextWindowStart = windowStart + WINDOW_SIZE;
     const nextBtn = document.createElement('button');
-    nextBtn.className = `btn btn-secondary ${currentPage === totalPages ? 'disabled' : ''}`;
+    nextBtn.className = `btn btn-secondary ${windowEnd === totalPages ? 'disabled' : ''}`;
     nextBtn.innerHTML = '<i data-lucide="chevron-right"></i>';
-    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.disabled = windowEnd === totalPages;
     nextBtn.onclick = () => {
-        if (currentPage < totalPages) {
-            currentPage++;
+        if (nextWindowStart <= totalPages) {
+            currentPage = nextWindowStart;
             renderClinics();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }

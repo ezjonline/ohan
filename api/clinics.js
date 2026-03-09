@@ -23,16 +23,15 @@ module.exports = async (req, res) => {
             const path = `/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?view=${encodeURIComponent(AIRTABLE_VIEW_NAME)}${offset ? `&offset=${offset}` : ''}`;
 
             const options = {
-                hostname: '35.171.68.61', // api.airtable.com (IPv4)
+                hostname: 'api.airtable.com',
                 port: 443,
                 path: path,
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-                    'Host': 'api.airtable.com'
+                    'Authorization': `Bearer ${AIRTABLE_API_KEY}`
                 },
                 timeout: 10000,
-                rejectUnauthorized: false
+                family: 4
             };
 
             const airtableReq = https.request(options, (airtableRes) => {

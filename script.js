@@ -460,7 +460,19 @@ function renderPagination() {
 
     container.style.display = 'flex';
 
-    // Prev Button
+    const WINDOW_SIZE = 5;
+
+    // Calculate the window of pages to display
+    let windowStart = Math.max(1, currentPage - Math.floor(WINDOW_SIZE / 2));
+    let windowEnd = windowStart + WINDOW_SIZE - 1;
+
+    // Clamp the window to valid page range
+    if (windowEnd > totalPages) {
+        windowEnd = totalPages;
+        windowStart = Math.max(1, windowEnd - WINDOW_SIZE + 1);
+    }
+
+    // Prev Button — goes back one page and keeps window in view
     const prevBtn = document.createElement('button');
     prevBtn.className = `btn btn-secondary ${currentPage === 1 ? 'disabled' : ''}`;
     prevBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
@@ -474,8 +486,8 @@ function renderPagination() {
     };
     container.appendChild(prevBtn);
 
-    // Page Numbers
-    for (let i = 1; i <= totalPages; i++) {
+    // Page Number Buttons (windowed)
+    for (let i = windowStart; i <= windowEnd; i++) {
         const pgBtn = document.createElement('button');
         pgBtn.className = `btn ${i === currentPage ? 'btn-primary' : 'btn-secondary'}`;
         pgBtn.style.minWidth = '40px';
@@ -488,7 +500,7 @@ function renderPagination() {
         container.appendChild(pgBtn);
     }
 
-    // Next Button
+    // Next Button — goes forward one page and keeps window in view
     const nextBtn = document.createElement('button');
     nextBtn.className = `btn btn-secondary ${currentPage === totalPages ? 'disabled' : ''}`;
     nextBtn.innerHTML = '<i data-lucide="chevron-right"></i>';

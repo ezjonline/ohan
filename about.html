@@ -7,9 +7,16 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
+
+        // Default consent state
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+        });
+
         gtag('js', new Date());
         gtag('config', 'G-BRZ6FLS4T0');
     </script>
+    <script src="cookie-banner.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - OHAN</title>
@@ -32,6 +39,18 @@
                 <a href="clinics.html" class="nav-link">Find Clinics</a>
                 <a href="partner.html" class="nav-link">Partners</a>
                 <a href="navigator.html" class="btn btn-primary">Start Navigator</a>
+                <button class="lang-selector" aria-haspopup="true" aria-expanded="false" aria-label="Select Language">
+                    <i data-lucide="globe" aria-hidden="true"></i>
+                    <span>Languages</span>
+                    <div class="lang-dropdown">
+                        <span class="lang-item" tabindex="0">English</span>
+                        <span class="lang-item" tabindex="0">Polish</span>
+                        <span class="lang-item" tabindex="0">Spanish</span>
+                        <span class="lang-item" tabindex="0">Hmong</span>
+                        <span class="lang-item" tabindex="0">Chinese</span>
+                        <span class="lang-item" tabindex="0">Arabic</span>
+                    </div>
+                </button>
             </nav>
         </div>
     </header>
@@ -42,9 +61,13 @@
             <div class="container text-center" style="max-width: 800px;">
                 <div class="badge" style="margin-bottom: var(--spacing-3);">About Us</div>
                 <h1 style="margin-bottom: var(--spacing-4);">Bridging the Gap in Oral Healthcare</h1>
+                <p style="font-size: 1.25rem; color: var(--color-text-muted); margin-bottom: var(--spacing-4);">
+                    OHAN is an independent informational dental care directory dedicated to making dental care
+                    information more accessible and easier to understand for everyone.
+                </p>
                 <p style="font-size: 1.25rem; color: var(--color-text-muted);">
-                    OHAN is a public health initiative dedicated to making dental care information accessible,
-                    understandable, and actionable for everyone.
+                    Our goal is to help individuals and families locate dental clinics and better understand available
+                    oral health resources using publicly available information sources.
                 </p>
             </div>
         </section>
@@ -52,18 +75,16 @@
         <!-- What is OHAN Section -->
         <section class="section">
             <div class="container">
-                <div class="grid grid-cols-2 gap-8" style="align-items: center;">
+                <div class="grid grid-cols-2 gap-8 items-center grid-mobile-stack">
                     <div>
                         <h2>Access for Everyone</h2>
                         <p style="font-size: 1.125rem; margin-bottom: var(--spacing-4);">
-                            Navigating the dental healthcare system can be overwhelming. Cost barriers, confusing
-                            terminology, and lack of clear information often prevent people from getting the care they
-                            need.
+                            Everyone deserves to understand their oral health options. However, navigating the system
+                            often involves barriers like complex terminology and difficult-to-locate provider data.
                         </p>
                         <p style="color: var(--color-text-muted);">
-                            The Oral Health Access Navigator (OHAN) was built to remove these obstacles. We provide a
-                            simple, automated way to find low-cost safety-net clinics and understand basic oral health
-                            concepts without the medical jargon.
+                            OHAN bridges this gap by aggregating information from public databases and partner sources,
+                            providing a simplified way to explore dental care resources in your community.
                         </p>
                     </div>
                     <div class="card" style="background: var(--color-primary-light); border-color: transparent;">
@@ -71,15 +92,15 @@
                         <ul style="list-style: none;">
                             <li class="flex items-center gap-2" style="margin-bottom: 12px;">
                                 <i data-lucide="check-circle" style="color: var(--color-primary); width: 20px;"></i>
-                                <span>Individuals without dental insurance</span>
+                                <span>Individuals without traditional dental insurance</span>
                             </li>
                             <li class="flex items-center gap-2" style="margin-bottom: 12px;">
                                 <i data-lucide="check-circle" style="color: var(--color-primary); width: 20px;"></i>
-                                <span>Families seeking low-cost or sliding-scale clinics</span>
+                                <span>Families seeking information on low-cost clinic options</span>
                             </li>
                             <li class="flex items-center gap-2" style="margin-bottom: 12px;">
                                 <i data-lucide="check-circle" style="color: var(--color-primary); width: 20px;"></i>
-                                <span>Anyone engaging in preventive oral health education</span>
+                                <span>Anyone looking to better understand oral health resources</span>
                             </li>
                         </ul>
                     </div>
@@ -90,7 +111,7 @@
         <!-- Core Functions & Limitations -->
         <section class="section" style="background-color: white;">
             <div class="container">
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-2 gap-8 grid-mobile-stack">
                     <!-- How We Help -->
                     <div class="card" style="border-top: 4px solid var(--color-primary);">
                         <div class="flex items-center gap-2" style="margin-bottom: var(--spacing-3);">
@@ -98,11 +119,14 @@
                             <h3 style="margin: 0;">What OHAN Does</h3>
                         </div>
                         <ul style="padding-left: 20px; color: var(--color-text-muted);">
-                            <li style="margin-bottom: 8px;">Helps you find local safety-net dental clinics.</li>
-                            <li style="margin-bottom: 8px;">Explains common dental procedures in plain language.</li>
-                            <li style="margin-bottom: 8px;">Provides information on Medicaid and sliding-scale options.
+                            <li style="margin-bottom: 8px;">Locates local dental clinics using public provider data.
                             </li>
-                            <li>Empowers you to ask the right questions to your provider.</li>
+                            <li style="margin-bottom: 8px;">Provides clarity on common oral health terms and resources.
+                            </li>
+                            <li style="margin-bottom: 8px;">Explains different types of dental providers and payment
+                                options.
+                            </li>
+                            <li>Helps you prepare for your next dental visit with reliable information.</li>
                         </ul>
                     </div>
 
@@ -113,14 +137,14 @@
                             <h3 style="margin: 0; color: #92400E;">What OHAN Does NOT Do</h3>
                         </div>
                         <ul style="padding-left: 20px; color: #92400E;">
-                            <li style="margin-bottom: 8px;"><strong>No Medical Diagnosis:</strong> We cannot tell you
-                                what is wrong with your teeth.</li>
-                            <li style="margin-bottom: 8px;"><strong>No Treatment:</strong> We are an information tool,
-                                not a clinic.</li>
+                            <li style="margin-bottom: 8px;"><strong>No Medical Diagnosis:</strong> We cannot diagnose or
+                                treat any dental conditions.</li>
+                            <li style="margin-bottom: 8px;"><strong>No Clinical Care:</strong> We are an information
+                                directory, not a healthcare provider.</li>
                             <li style="margin-bottom: 8px;"><strong>No Medical Advice:</strong> Our content is for
-                                educational purposes only.</li>
-                            <li><strong>Not for Emergencies:</strong> If you are in severe pain or danger, call 911 or
-                                visit an ER.</li>
+                                informational purposes and does not replace professional advice.</li>
+                            <li><strong>Not for Emergencies:</strong> If you are experiencing a dental emergency, seek
+                                immediate professional care or call 911.</li>
                         </ul>
                     </div>
                 </div>
@@ -130,18 +154,19 @@
         <!-- Trust & Why -->
         <section class="section" style="text-align: center;">
             <div class="container" style="max-width: 700px;">
-                <h2 style="margin-bottom: var(--spacing-4);">Built on Trust and Transparency</h2>
+                <h2 style="margin-bottom: var(--spacing-4);">Built on Transparency</h2>
                 <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-6);">
-                    We believe that health information should be free, clear, and unbiased. OHAN is a non-commercial
-                    project designed solely to improve public health outcomes in our community. We do not sell user data
-                    or endorse specific private practices for profit.
+                    We believe that access to healthcare information should be clear and unbiased. OHAN is committed to
+                    transparency in how we surface information, ensuring that individuals can explore their options with
+                    confidence and independence.
                 </p>
                 <div
                     style="background-color: var(--color-surface); padding: var(--spacing-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: inline-block;">
                     <p style="margin: 0; font-weight: 600; font-size: 0.9rem; color: var(--color-text-light);">
                         <i data-lucide="info"
                             style="width: 16px; display: inline; vertical-align: middle; margin-right: 4px;"></i>
-                        Educational Use Only. Always consult a licensed professional for dental care.
+                        Important Notice: OHAN Health is for informational purposes only. Always consult a licensed
+                        professional for diagnosis and treatment.
                     </p>
                 </div>
             </div>
@@ -163,20 +188,38 @@
     </main>
 
     <footer class="footer">
-        <div class="container flex flex-col items-center gap-6">
+        <div class="container flex flex-col items-center gap-6 text-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
 
-            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
-                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
-                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
-                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
-                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            <div style="font-weight: 600; font-size: 1.125rem;">OHAN Health</div>
+            <div style="font-size: 0.9rem; color: var(--color-text-muted);">
+                Operated by OHAN Health LLC<br>
+                Illinois, United States
+            </div>
+
+            <div class="flex gap-4 flex-wrap justify-center" style="font-size: 0.9rem; margin: var(--spacing-2) 0;">
+                <a href="/contact" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/terms" class="nav-link" style="color: var(--color-text-muted);">Terms of Use</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/privacy" class="nav-link" style="color: var(--color-text-muted);">Privacy Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/disclaimer" class="nav-link" style="color: var(--color-text-muted);">Disclaimer</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/cookies" class="nav-link" style="color: var(--color-text-muted);">Cookie Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/accessibility" class="nav-link" style="color: var(--color-text-muted);">Accessibility
+                    Statement</a>
+            </div>
+
+            <div style="font-size: 0.875rem; color: var(--color-text-light); max-width: 600px;">
+                OHAN Health LLC is not a healthcare provider.
             </div>
 
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Health.
+                © 2026 OHAN Health LLC
             </div>
         </div>
     </footer>

@@ -24,6 +24,49 @@ if (navbar) {
     });
 }
 
+// Language Selector Toggle
+const langSelectors = document.querySelectorAll('.lang-selector');
+langSelectors.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = btn.classList.contains('is-open');
+        // Close others
+        langSelectors.forEach(other => {
+            if (other !== btn) {
+                other.classList.remove('is-open');
+                other.setAttribute('aria-expanded', 'false');
+            }
+        });
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', !isOpen);
+    });
+
+    // Handle items inside
+    const items = btn.querySelectorAll('.lang-item');
+    items.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.log('Language selected:', item.textContent.trim());
+            btn.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
+        });
+        item.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
+});
+
+// Close language dropdown on outside click
+document.addEventListener('click', () => {
+    langSelectors.forEach(btn => {
+        btn.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+    });
+});
+
 // Initialize Icons
 if (typeof lucide !== 'undefined') {
     lucide.createIcons();
@@ -52,17 +95,25 @@ const knownZips = {
     '78703': { lat: 30.2902, lon: -97.7622 }, // Clarksville
     '78704': { lat: 30.2435, lon: -97.7656 }, // South Congress
     '78705': { lat: 30.2926, lon: -97.7381 }, // UT
+    '78717': { lat: 30.4900, lon: -97.7700 }, // Avery Ranch
     '78721': { lat: 30.2696, lon: -97.6928 },
     '78722': { lat: 30.2858, lon: -97.7157 },
     '78723': { lat: 30.3060, lon: -97.6880 },
+    '78726': { lat: 30.4300, lon: -97.8400 },
+    '78727': { lat: 30.4200, lon: -97.7000 },
+    '78729': { lat: 30.4600, lon: -97.7600 },
+    '78731': { lat: 30.3500, lon: -97.7600 },
     '78741': { lat: 30.2291, lon: -97.7214 }, // Riverside
     '78744': { lat: 30.1872, lon: -97.7371 }, // Southeast
     '78745': { lat: 30.2078, lon: -97.7958 }, // South
     '78746': { lat: 30.2980, lon: -97.8050 }, // West Lake
     '78748': { lat: 30.1633, lon: -97.8236 }, // Far South
+    '78749': { lat: 30.2100, lon: -97.8600 },
+    '78750': { lat: 30.4300, lon: -97.8000 },
     '78751': { lat: 30.3129, lon: -97.7277 }, // Hyde Park
     '78752': { lat: 30.3342, lon: -97.7056 },
     '78753': { lat: 30.3752, lon: -97.6816 }, // North
+    '78754': { lat: 30.3600, lon: -97.6200 },
     '78757': { lat: 30.3540, lon: -97.7340 }, // Allandale
     '78758': { lat: 30.3800, lon: -97.7120 }, // North Austin
     '78759': { lat: 30.4045, lon: -97.7516 }, // Arboretum
@@ -76,6 +127,11 @@ const knownZips = {
     '78641': { lat: 30.5200, lon: -97.9000 }, // Leander
     '73301': { lat: 30.2672, lon: -97.7431 } // IRS
 };
+
+// --- PAGINATION STATE ---
+let currentPage = 1;
+let itemsPerPage = 6;
+let currentFilteredClinics = [];
 
 // Initialization
 async function initClinics() {
@@ -101,20 +157,67 @@ async function initClinics() {
         if (loadingIndicator) loadingIndicator.style.display = 'none';
 
         console.log('[Clinic] Starting DOM rendering...');
-        renderClinics(allClinics);
+        currentFilteredClinics = allClinics;
+        renderClinics();
         console.log('[Clinic] Rendering complete.');
     } catch (error) {
-        console.error('[Clinic] Error loading clinics:', error);
-        if (loadingIndicator) {
-            loadingIndicator.innerHTML = `
-                <div style="color: #e53e3e; padding: 2rem; border: 1px solid #fed7d7; background: #fff5f5; border-radius: 8px;">
-                    <h3>Failed to load clinic data</h3>
-                    <p>${error.message}</p>
-                    <p style="font-size: 0.85rem; margin-top: 1rem;">Please check the server console for details.</p>
-                </div>
-            `;
+        console.error('[Clinic] API Error, attempting CSV fallback:', error);
+        try {
+            const csvData = await fetchCSVFallback();
+            allClinics = csvData;
+            currentFilteredClinics = allClinics;
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            renderClinics();
+            console.log(`[Clinic] Successfully loaded ${allClinics.length} clinics from fallback CSV`);
+        } catch (csvError) {
+            console.error('[Clinic] CSV fallback also failed:', csvError);
+            if (loadingIndicator) {
+                loadingIndicator.innerHTML = `
+                    <div style="color: #e53e3e; padding: 2rem; border: 1px solid #fed7d7; background: #fff5f5; border-radius: 8px;">
+                        <h3>Failed to load clinic data</h3>
+                        <p>We are having trouble connecting to our database. Please try again later.</p>
+                    </div>
+                `;
+            }
         }
     }
+}
+
+async function fetchCSVFallback() {
+    const res = await fetch('/clinics_dump.csv');
+    if (!res.ok) throw new Error('CSV file not found');
+    const text = await res.text();
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    const headers = lines[0].split(',').map(h => h.trim());
+
+    return lines.slice(1).map(line => {
+        // Robust CSV split that handles quoted fields with commas
+        const regex = /(".*?"|[^",\s]+)(?=\s*,|\s*$)/g;
+        const values = [];
+        let match;
+        while ((match = regex.exec(line)) !== null) {
+            values.push(match[0].replace(/^"|"$/g, '').trim());
+        }
+
+        const record = {};
+        headers.forEach((header, i) => {
+            // Map CSV headers to the expected Airtable-style names
+            const fieldMap = {
+                'Clinic Name': 'Clinic Name',
+                'Specialty': 'Treatment Specialty',
+                'Services Offered': 'Services Offered',
+                'Zip Code': 'Zip Code',
+                'City': 'City',
+                'State': 'State',
+                'Insurance Accepted': 'Insurance Accepted',
+                'Website': 'Website',
+                'Phone': 'Phone Number'
+            };
+            const mappedHeader = fieldMap[header] || header;
+            record[mappedHeader] = values[i];
+        });
+        return record;
+    });
 }
 
 // Populate Specialty Dropdown (Fixed List)
@@ -139,14 +242,15 @@ function populateSpecialties() {
         "Special Health Care",
         "Pediatrics",
         "Family Dentistry",
-        "General Dentistry"
+        "Pediatrics",
+        "Public Health"
     ];
 
     specialties.sort().forEach(spec => {
-        const option = document.createElement('option');
-        option.value = spec; // Keeps original casing for display? No, use as value.
-        option.textContent = spec;
-        specialtyFilter.appendChild(option);
+        const opt = document.createElement('option');
+        opt.value = spec;
+        opt.textContent = spec;
+        specialtyFilter.appendChild(opt);
     });
 }
 
@@ -243,17 +347,18 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 // Rendering Logic
-function renderClinics(clinics) {
+function renderClinics() {
     const clinicsContainer = document.getElementById('clinics-container');
     const noResultsInfo = document.getElementById('no-results');
+    const paginationContainer = document.getElementById('pagination-container');
 
     clinicsContainer.innerHTML = '';
 
-    if (clinics.length === 0) {
+    if (currentFilteredClinics.length === 0) {
         clinicsContainer.style.display = 'none';
+        if (paginationContainer) paginationContainer.style.display = 'none';
         if (noResultsInfo) {
             noResultsInfo.style.display = 'block';
-            // Update no-results text based on filter
             const msg = document.querySelector('#no-results p');
             if (msg) msg.textContent = "Try adjusting your filters (Specialty or Distance) to see more results.";
         }
@@ -262,8 +367,15 @@ function renderClinics(clinics) {
 
     clinicsContainer.style.display = 'grid';
     if (noResultsInfo) noResultsInfo.style.display = 'none';
+    if (paginationContainer) paginationContainer.style.display = 'flex';
 
-    clinics.forEach((clinic, index) => {
+    // Pagination Slicing
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const clinicsToPage = currentFilteredClinics.slice(startIndex, endIndex);
+
+    clinicsToPage.forEach((clinic, index) => {
+        const clinicIndex = startIndex + index; // Global index
         const card = document.createElement('div');
         card.className = 'card';
 
@@ -294,7 +406,7 @@ function renderClinics(clinics) {
         card.innerHTML = `
             <div class="flex justify-between items-start" style="margin-bottom: var(--spacing-2);">
                 <div style="flex: 1; padding-right: 8px;">
-                    <h3 style="margin: 0; font-size: 1.125rem;">${name}</h3>
+                    <h2 style="margin: 0; font-size: 1.125rem;">${name}</h2>
                 </div>
                 <!-- Stack badges -->
                 <div class="flex flex-col items-end gap-1">
@@ -317,11 +429,11 @@ function renderClinics(clinics) {
                 Visit Website <i data-lucide="external-link" style="width: 14px; margin-left: 4px;"></i>
             </a>
 
-            <button class="details-btn" onclick="toggleDetails(${index})">
+            <button class="details-btn" id="details-btn-${clinicIndex}" onclick="toggleDetails(${clinicIndex})" aria-expanded="false" aria-controls="details-${clinicIndex}">
                 View Services & Details <i data-lucide="chevron-down" style="width: 14px;"></i>
             </button>
 
-            <div id="details-${index}" class="card-details">
+            <div id="details-${clinicIndex}" class="card-details">
                 ${type ? `<p><strong>Type:</strong> ${type}</p>` : ''}
                 <p><strong>Insurance:</strong> ${insurance}</p>
                 <p><strong>Services:</strong> ${services}</p>
@@ -332,12 +444,77 @@ function renderClinics(clinics) {
     });
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
+    renderPagination();
+}
+
+function renderPagination() {
+    const container = document.getElementById('pagination-container');
+    if (!container) return;
+
+    const totalPages = Math.ceil(currentFilteredClinics.length / itemsPerPage);
+    container.innerHTML = '';
+
+    if (totalPages <= 1) {
+        container.style.display = 'none';
+        return;
+    }
+
+    container.style.display = 'flex';
+
+    // Prev Button
+    const prevBtn = document.createElement('button');
+    prevBtn.className = `btn btn-secondary ${currentPage === 1 ? 'disabled' : ''}`;
+    prevBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderClinics();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+    container.appendChild(prevBtn);
+
+    // Page Numbers
+    for (let i = 1; i <= totalPages; i++) {
+        const pgBtn = document.createElement('button');
+        pgBtn.className = `btn ${i === currentPage ? 'btn-primary' : 'btn-secondary'}`;
+        pgBtn.style.minWidth = '40px';
+        pgBtn.textContent = i;
+        pgBtn.onclick = () => {
+            currentPage = i;
+            renderClinics();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        container.appendChild(pgBtn);
+    }
+
+    // Next Button
+    const nextBtn = document.createElement('button');
+    nextBtn.className = `btn btn-secondary ${currentPage === totalPages ? 'disabled' : ''}`;
+    nextBtn.innerHTML = '<i data-lucide="chevron-right"></i>';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.onclick = () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderClinics();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+    container.appendChild(nextBtn);
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 window.toggleDetails = function (index) {
     const details = document.getElementById(`details-${index}`);
+    const btn = document.getElementById(`details-btn-${index}`);
     if (details) {
+        const isOpen = details.classList.contains('is-open');
         details.classList.toggle('is-open');
+        if (btn) {
+            btn.setAttribute('aria-expanded', !isOpen);
+        }
     }
 };
 
@@ -411,8 +588,15 @@ function handleSearch() {
             filtered = withDistance;
 
         } else {
-            alert(`Location for ${zipQuery} not found in our demo database. Showing exact zip matches only.`);
-            filtered = filtered.filter(c => c['Zip Code'] === zipQuery);
+            // ZIP exists but coords missing? Or invalid ZIP.
+            // Be more graceful: filter by exact string match if coords fail
+            const exactMatches = filtered.filter(c => c['Zip Code'] === zipQuery);
+            if (exactMatches.length > 0) {
+                filtered = exactMatches;
+            } else {
+                // If totally missing, showing nothing found is safer than 500 error or annoying alert
+                filtered = [];
+            }
         }
     } else {
         // No zip entered, clean up previous distance badges
@@ -422,7 +606,9 @@ function handleSearch() {
         });
     }
 
-    renderClinics(filtered);
+    currentPage = 1; // Reset to page 1 on search
+    currentFilteredClinics = filtered;
+    renderClinics();
 }
 
 // Event Listeners (Attach inside DOMContentLoaded or check existence)

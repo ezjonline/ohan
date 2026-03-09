@@ -7,9 +7,16 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
+
+        // Default consent state
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+        });
+
         gtag('js', new Date());
         gtag('config', 'G-BRZ6FLS4T0');
     </script>
+    <script src="cookie-banner.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Clinics - OHAN</title>
@@ -32,6 +39,18 @@
                 <a href="clinics.html" class="nav-link active">Find Clinics</a>
                 <a href="partner.html" class="nav-link">Partners</a>
                 <a href="navigator.html" class="btn btn-primary">Start Navigator</a>
+                <button class="lang-selector" aria-haspopup="true" aria-expanded="false" aria-label="Select Language">
+                    <i data-lucide="globe" aria-hidden="true"></i>
+                    <span>Languages</span>
+                    <div class="lang-dropdown">
+                        <span class="lang-item" tabindex="0">English</span>
+                        <span class="lang-item" tabindex="0">Polish</span>
+                        <span class="lang-item" tabindex="0">Spanish</span>
+                        <span class="lang-item" tabindex="0">Hmong</span>
+                        <span class="lang-item" tabindex="0">Chinese</span>
+                        <span class="lang-item" tabindex="0">Arabic</span>
+                    </div>
+                </button>
             </nav>
         </div>
     </header>
@@ -40,13 +59,18 @@
         <div class="container">
             <div style="margin-bottom: var(--spacing-6);">
                 <h1>Clinic Directory</h1>
-                <p style="max-width: 100%;">Find low-cost, sliding-scale, and safety-net dental clinics near you. Clinic
-                    information is based on public sources and may change.</p>
+                <p
+                    style="margin-bottom: var(--spacing-2); color: var(--color-primary); font-weight: 500; font-size: 0.95rem;">
+                    Provider information is sourced from publicly available databases and may change over time. Please
+                    contact providers directly for current details.
+                </p>
+                <p style="max-width: 100%; color: var(--color-text-muted);">Find low-cost, sliding-scale, and safety-net
+                    dental clinics near you.</p>
             </div>
 
             <!-- Filters -->
-            <div class="card" style="margin-bottom: var(--spacing-6); background: white; padding: var(--spacing-3);">
-                <div class="flex gap-4 items-end" style="flex-wrap: wrap;">
+            <div class="card" style="margin-bottom: var(--spacing-6); background: white; padding: var(--spacing-4);">
+                <div class="flex gap-4 items-end flex-mobile-column" style="flex-wrap: wrap;">
                     <!-- Specialty Filter (Primary) -->
                     <div style="flex: 2; min-width: 240px;">
                         <label for="specialty-filter"
@@ -100,12 +124,18 @@
                 <!-- Clinics injected here -->
             </div>
 
+            <!-- Pagination -->
+            <div id="pagination-container" class="flex justify-center gap-2"
+                style="margin-top: var(--spacing-8); display: none;">
+                <!-- Pagination buttons injected here -->
+            </div>
+
             <!-- No Results State -->
             <div id="no-results" class="text-center"
                 style="display: none; padding: 3rem; background: white; border-radius: var(--radius-md); border: 1px dashed var(--color-border);">
                 <i data-lucide="search-x"
                     style="width: 48px; height: 48px; color: var(--color-text-muted); margin-bottom: 1rem; display: inline-block;"></i>
-                <h3>No clinics found</h3>
+                <h2>No clinics found</h2>
                 <p class="text-muted">Try a different Zip Code or clear your search to see all locations.</p>
                 <button id="clear-search-btn" class="btn btn-secondary" style="margin-top: 1rem;">View All
                     Clinics</button>
@@ -116,20 +146,38 @@
     </main>
 
     <footer class="footer">
-        <div class="container flex flex-col items-center gap-6">
+        <div class="container flex flex-col items-center gap-6 text-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
 
-            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
-                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
-                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
-                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
-                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            <div style="font-weight: 600; font-size: 1.125rem;">OHAN Health</div>
+            <div style="font-size: 0.9rem; color: var(--color-text-muted);">
+                Operated by OHAN Health LLC<br>
+                Illinois, United States
+            </div>
+
+            <div class="flex gap-4 flex-wrap justify-center" style="font-size: 0.9rem; margin: var(--spacing-2) 0;">
+                <a href="/contact" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/terms" class="nav-link" style="color: var(--color-text-muted);">Terms of Use</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/privacy" class="nav-link" style="color: var(--color-text-muted);">Privacy Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/disclaimer" class="nav-link" style="color: var(--color-text-muted);">Disclaimer</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/cookies" class="nav-link" style="color: var(--color-text-muted);">Cookie Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/accessibility" class="nav-link" style="color: var(--color-text-muted);">Accessibility
+                    Statement</a>
+            </div>
+
+            <div style="font-size: 0.875rem; color: var(--color-text-light); max-width: 600px;">
+                OHAN Health LLC is not a healthcare provider.
             </div>
 
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Health.
+                © 2026 OHAN Health LLC
             </div>
         </div>
     </footer>

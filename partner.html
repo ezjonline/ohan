@@ -7,9 +7,16 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
+
+        // Default consent state
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+        });
+
         gtag('js', new Date());
         gtag('config', 'G-BRZ6FLS4T0');
     </script>
+    <script src="cookie-banner.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partner With OHAN - For Clinics & Organizations</title>
@@ -36,6 +43,18 @@
                 <a href="partner.html" class="nav-link active">Partners</a>
                 <a href="navigator.html" class="btn btn-primary" style="margin-left: var(--spacing-2);">Start
                     Navigator</a>
+                <button class="lang-selector" aria-haspopup="true" aria-expanded="false" aria-label="Select Language">
+                    <i data-lucide="globe" aria-hidden="true"></i>
+                    <span>Languages</span>
+                    <div class="lang-dropdown">
+                        <span class="lang-item" tabindex="0">English</span>
+                        <span class="lang-item" tabindex="0">Polish</span>
+                        <span class="lang-item" tabindex="0">Spanish</span>
+                        <span class="lang-item" tabindex="0">Hmong</span>
+                        <span class="lang-item" tabindex="0">Chinese</span>
+                        <span class="lang-item" tabindex="0">Arabic</span>
+                    </div>
+                </button>
             </nav>
             <button id="menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"
                 style="display: none;">
@@ -62,8 +81,8 @@
                 </div>
 
                 <!-- Benefits Row -->
-                <div class="benefits-row flex gap-12 justify-center flex-wrap"
-                    style="margin-bottom: 80px; margin-top: 40px;">
+                <div class="benefits-row flex gap-12 justify-center flex-wrap grid-mobile-stack"
+                    style="margin-bottom: var(--spacing-4); margin-top: 40px;">
                     <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
                         <div class="benefit-icon-wrapper">
                             <i data-lucide="users" style="color: var(--color-primary); width: 24px; height: 24px;"></i>
@@ -75,7 +94,7 @@
                             <i data-lucide="check-circle"
                                 style="color: var(--color-primary); width: 24px; height: 24px;"></i>
                         </div>
-                        <span style="font-weight: 600;">Reduce Referral Errors</span>
+                        <span style="font-weight: 600;">Increase Visibility</span>
                     </div>
                     <div class="flex flex-col items-center gap-3" style="font-size: 1.125rem; min-width: 200px;">
                         <div class="benefit-icon-wrapper">
@@ -84,6 +103,11 @@
                         <span style="font-weight: 600;">Support Community Health</span>
                     </div>
                 </div>
+
+                <p
+                    style="font-size: 1.5rem; color: var(--color-text-muted); margin-bottom: 80px; width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto; text-align: center; line-height: 1.5;">
+                    Help more people discover your organization through the OHAN directory platform.
+                </p>
 
                 <div class="form-wrapper"
                     style="background: white; border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--color-border); box-shadow: var(--shadow-lg); width: 100%; max-width: 800px; text-align: left;">
@@ -118,20 +142,38 @@
     </main>
 
     <footer class="footer">
-        <div class="container flex flex-col items-center gap-6">
+        <div class="container flex flex-col items-center gap-6 text-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
 
-            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
-                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
-                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
-                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
-                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            <div style="font-weight: 600; font-size: 1.125rem;">OHAN Health</div>
+            <div style="font-size: 0.9rem; color: var(--color-text-muted);">
+                Operated by OHAN Health LLC<br>
+                Illinois, United States
+            </div>
+
+            <div class="flex gap-4 flex-wrap justify-center" style="font-size: 0.9rem; margin: var(--spacing-2) 0;">
+                <a href="/contact" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/terms" class="nav-link" style="color: var(--color-text-muted);">Terms of Use</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/privacy" class="nav-link" style="color: var(--color-text-muted);">Privacy Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/disclaimer" class="nav-link" style="color: var(--color-text-muted);">Disclaimer</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/cookies" class="nav-link" style="color: var(--color-text-muted);">Cookie Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/accessibility" class="nav-link" style="color: var(--color-text-muted);">Accessibility
+                    Statement</a>
+            </div>
+
+            <div style="font-size: 0.875rem; color: var(--color-text-light); max-width: 600px;">
+                OHAN Health LLC is not a healthcare provider.
             </div>
 
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Health.
+                © 2026 OHAN Health LLC
             </div>
         </div>
     </footer>

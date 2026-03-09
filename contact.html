@@ -7,9 +7,16 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
+
+        // Default consent state
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+        });
+
         gtag('js', new Date());
         gtag('config', 'G-BRZ6FLS4T0');
     </script>
+    <script src="cookie-banner.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - OHAN</title>
@@ -76,20 +83,38 @@
     </main>
 
     <footer class="footer">
-        <div class="container flex flex-col items-center gap-6">
+        <div class="container flex flex-col items-center gap-6 text-center">
             <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
             </a>
 
-            <div class="flex gap-6 flex-wrap justify-center" style="font-size: 0.9rem;">
-                <a href="about.html" class="nav-link" style="color: var(--color-text-muted);">About</a>
-                <a href="partner.html" class="nav-link" style="color: var(--color-text-muted);">Partners</a>
-                <a href="contact.html" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
-                <a href="privacy.html" class="nav-link" style="color: var(--color-text-muted);">Privacy</a>
+            <div style="font-weight: 600; font-size: 1.125rem;">OHAN Health</div>
+            <div style="font-size: 0.9rem; color: var(--color-text-muted);">
+                Operated by OHAN Health LLC<br>
+                Illinois, United States
+            </div>
+
+            <div class="flex gap-4 flex-wrap justify-center" style="font-size: 0.9rem; margin: var(--spacing-2) 0;">
+                <a href="/contact" class="nav-link" style="color: var(--color-text-muted);">Contact</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/terms" class="nav-link" style="color: var(--color-text-muted);">Terms of Use</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/privacy" class="nav-link" style="color: var(--color-text-muted);">Privacy Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/disclaimer" class="nav-link" style="color: var(--color-text-muted);">Disclaimer</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/cookies" class="nav-link" style="color: var(--color-text-muted);">Cookie Policy</a>
+                <span style="color: var(--color-border);">|</span>
+                <a href="/accessibility" class="nav-link" style="color: var(--color-text-muted);">Accessibility
+                    Statement</a>
+            </div>
+
+            <div style="font-size: 0.875rem; color: var(--color-text-light); max-width: 600px;">
+                OHAN Health LLC is not a healthcare provider.
             </div>
 
             <div style="font-size: 0.875rem; color: var(--color-text-light);">
-                © 2025 OHAN Health.
+                © 2026 OHAN Health LLC
             </div>
         </div>
     </footer>

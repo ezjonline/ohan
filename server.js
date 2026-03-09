@@ -7,6 +7,19 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
+
+// Clean URLs middleware for local dev
+app.use((req, res, next) => {
+    if (req.path.indexOf('.') === -1 && req.path !== '/') {
+        const file = `.${req.path}.html`;
+        res.sendFile(file, { root: './' }, (err) => {
+            if (err) next();
+        });
+    } else {
+        next();
+    }
+});
+
 app.use(express.static('./'));
 
 app.get('/api/clinics', (req, res) => {
@@ -17,16 +30,14 @@ app.get('/api/clinics', (req, res) => {
         const path = `/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?view=${encodeURIComponent(AIRTABLE_VIEW_NAME)}${offset ? `&offset=${offset}` : ''}`;
 
         const options = {
-            hostname: '35.171.68.61', // api.airtable.com (IPv4)
+            hostname: 'api.airtable.com',
             port: 443,
             path: path,
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-                'Host': 'api.airtable.com'
+                'Authorization': `Bearer ${AIRTABLE_API_KEY}`
             },
-            timeout: 10000,
-            rejectUnauthorized: false
+            timeout: 10000
         };
 
         console.log(`[Server] Fetching page with offset: ${offset || 'none'}`);
@@ -49,7 +60,8 @@ app.get('/api/clinics', (req, res) => {
                         res.status(airtableRes.statusCode).json(json);
                     }
                 } catch (e) {
-                    res.status(500).json({ error: 'Failed to parse Airtable response' });
+                    console.error('[Server] Failed to parse Airtable response. Body:', data.substring(0, 500));
+                    res.status(500).json({ error: 'Failed to parse Airtable response', body: data.substring(0, 500) });
                 }
             });
         });

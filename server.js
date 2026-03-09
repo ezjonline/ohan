@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     }
 });
 
-app.use(express.static('./'));
+app.use(express.static('./', { maxAge: '1h' }));
 
 app.get('/api/clinics', (req, res) => {
     const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME, AIRTABLE_VIEW_NAME } = process.env;

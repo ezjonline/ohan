@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="styles.css?v=3">
 
     <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
 </head>
 
 <body>
@@ -150,7 +150,7 @@
     <footer class="footer">
         <div class="container flex flex-col items-center gap-6 text-center">
             <a href="index.html" class="flex items-center gap-2">
-                <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
+                <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;" loading="lazy">
             </a>
 
             <div style="font-weight: 600; font-size: 1.125rem;">OHAN Health</div>
@@ -184,7 +184,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <style>
         /* Small override to show the menu button logic in pure CSS for mobile if needed, 
            but we did JS toggle. Let's ensure the hidden state is correct in styles.css 

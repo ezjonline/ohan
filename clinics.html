@@ -20,11 +20,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Clinics - OHAN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=3">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
 </head>
 
 <body>
@@ -148,7 +150,7 @@
     <footer class="footer">
         <div class="container flex flex-col items-center gap-6 text-center">
             <a href="index.html" class="flex items-center gap-2">
-                <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;">
+                <img src="logo.png" alt="OHAN Health" style="height: 48px; opacity: 0.9;" loading="lazy">
             </a>
 
             <div style="font-weight: 600; font-size: 1.125rem;">OHAN Health</div>
@@ -182,7 +184,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=2" defer></script>
     <style>
         @media (max-width: 768px) {
             .grid-cols-2 {

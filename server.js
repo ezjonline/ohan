@@ -37,7 +37,8 @@ app.get('/api/clinics', (req, res) => {
             headers: {
                 'Authorization': `Bearer ${AIRTABLE_API_KEY}`
             },
-            timeout: 10000
+            timeout: 30000,
+            family: 4
         };
 
         console.log(`[Server] Fetching page with offset: ${offset || 'none'}`);
@@ -67,8 +68,22 @@ app.get('/api/clinics', (req, res) => {
         });
 
         airtableReq.on('error', (e) => {
-            console.error('[Server] IPv4 Proxy Error:', e.message);
-            res.status(500).json({ error: e.message });
+            console.error('[Server] Airtable API Request Error:', e);
+            if (!res.headersSent) {
+                res.status(500).json({
+                    error: e.message || 'Unknown network error',
+                    code: e.code,
+                    stack: e.stack
+                });
+            }
+        });
+
+        airtableReq.on('timeout', () => {
+            console.error('[Server] Airtable API Request Timeout');
+            airtableReq.destroy();
+            if (!res.headersSent) {
+                res.status(504).json({ error: 'Airtable API request timed out' });
+            }
         });
 
         airtableReq.end();

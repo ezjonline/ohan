@@ -130,7 +130,7 @@ const knownZips = {
 
 // --- PAGINATION STATE ---
 let currentPage = 1;
-let itemsPerPage = 6;
+let itemsPerPage = 10;
 let currentFilteredClinics = [];
 
 // Initialization
@@ -231,18 +231,17 @@ function populateSpecialties() {
     // Clear existing options except the first "All Specialties"
     specialtyFilter.innerHTML = '<option value="">All Specialties</option>';
 
-    // Hardcoded list per user request
+    // Hardcoded list per user request + Sync with Airtable data
     const specialties = [
+        "Endodontics",
+        "Family Dentistry",
+        "General Dentistry",
+        "Oral Surgery",
         "Orthodontics",
+        "Pediatrics",
         "Periodontics",
         "Prosthodontics",
-        "Endodontics",
-        "Oral Surgery",
-        "General Anesthesia",
         "Special Health Care",
-        "Pediatrics",
-        "Family Dentistry",
-        "Pediatrics",
         "Public Health"
     ];
 
@@ -302,7 +301,7 @@ async function fetchAllAirtableRecords() {
             'Zip Code': String(getField(['Zip Code', 'ZIP', 'Postal Code']) || '').trim(),
             'Phone Number': getField(['Phone Number', 'Phone', 'Contact Number']),
             'Website': getField(['Website', 'URL', 'Link']),
-            'Treatment Specialty': getField(['Treatment Specialties', 'Specialty', 'Department']),
+            'Treatment Specialty': getField(['Treatment Specialties', 'Treatment Specialty', 'Specialty', 'Service Specialty', 'Service Specialties', 'Department']),
             'Services Offered': getField(['Services Offered', 'Services', 'Description']),
             'Insurance Accepted': getField(['Insurance Accepted', 'Insurance', 'Payment Methods']),
             'Clinic Type': getField(['Clinic Type', 'Type', 'Classification']),
